@@ -10,7 +10,7 @@ Only operate on these names and paths. The ownership marker must exactly identif
 
 ## 2. Repeat the free lab
 
-Open Actions, select **Verify Harborlight operations**, choose **Run workflow**, leave main selected and submit. No secret, payment information or additional account is required. Read the summary after completion. Green CI means compilation, 16 boundary tests, unmarked-host refusal, all 15 live scenarios and evidence hashes completed. A partial table from a failed job is not overall acceptance.
+Open Actions, select **Verify Harborlight operations**, choose **Run workflow**, leave main selected and submit. No secret, payment information or additional account is required. Read the summary after completion. Green CI means compilation, 19 boundary tests, unmarked-host refusal, all 15 live scenarios and evidence hashes completed. A partial table from a failed job is not overall acceptance.
 
 The standard public runner is temporary. The workflow is event-driven and manually runnable; it is not a continuous production monitor or scheduled hosted server.
 
