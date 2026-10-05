@@ -29,7 +29,7 @@ A small dispatch business depends on a working Linux application. Its maintenanc
 | Recurring execution | At least two automatic systemd audits run during the accelerated lab timer exercise. |
 | Closeout | Final workload checks pass; rollback stops the application and removes the three owned lab units. |
 
-The lab has **15 live acceptance scenarios** and **16 automated boundary tests**. [Run history](https://github.com/Shemarhn/harborlight-operations-automation/actions) is the source of CI status. [Evidence guide](evidence/README.md) explains provenance and what each result does and does not prove.
+The lab has **15 live acceptance scenarios** and **19 automated boundary tests**. [Run history](https://github.com/Shemarhn/harborlight-operations-automation/actions) is the source of CI status. [Evidence guide](evidence/README.md) explains provenance and what each result does and does not prove.
 
 ## Architecture
 
