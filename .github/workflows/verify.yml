@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['app/**', 'operations/**', 'lab/**', 'tests/**', '.github/workflows/**']
+    paths: ['app/**', 'operations/**', 'lab/**', 'tests/**', 'verification/**', '.github/workflows/**']
   pull_request:
     paths: ['app/**', 'operations/**', 'lab/**', 'tests/**', '.github/workflows/**']
 permissions:
@@ -23,6 +23,8 @@ jobs:
         run: |
           python3 -m compileall -q app operations lab tests
           python3 -m unittest discover -s tests -v
+      - name: Validate public handover and retained evidence
+        run: python3 verification/check_handover.py
       - name: Refuse an unmarked host
         run: |
           set +e
