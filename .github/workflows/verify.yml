@@ -43,6 +43,6 @@ jobs:
         run: |
           if test -f evidence/run/acceptance.md; then cat evidence/run/acceptance.md >> "$GITHUB_STEP_SUMMARY"; fi
           if test -f evidence/run/latest.md; then cat evidence/run/latest.md >> "$GITHUB_STEP_SUMMARY"; fi
-          if test -f evidence/run/cases.json; then cat evidence/run/cases.json; fi
-          if test -f evidence/run/context.json; then cat evidence/run/context.json; fi
+          python3 -c 'import json; from pathlib import Path; p=Path("evidence/run/cases.json"); [print(json.dumps(x,sort_keys=True)) for x in json.loads(p.read_text())] if p.exists() else None'
+          python3 -c 'import json; from pathlib import Path; p=Path("evidence/run/context.json"); print(json.dumps(json.loads(p.read_text()),sort_keys=True)) if p.exists() else None'
           if test -f evidence/run/SHA256SUMS.txt; then cat evidence/run/SHA256SUMS.txt; fi
