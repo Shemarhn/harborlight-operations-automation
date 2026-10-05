@@ -78,9 +78,13 @@ def database_facts(path):
 def validate_backup(root, now=None):
     now = now or utcnow()
     manifest = json.loads(safe_child(root, 'backups/latest.json').read_text())
-    filename = manifest['file']
-    if not re.fullmatch(r'snapshot-[0-9TZ]+-[a-f0-9]{8}\.sqlite', filename):
+    if not isinstance(manifest, dict):
+        raise ValueError('Malformed backup manifest')
+    filename = manifest.get('file')
+    if not isinstance(filename, str) or not re.fullmatch(r'snapshot-[0-9TZ]+-[a-f0-9]{8}\.sqlite', filename):
         raise ValueError('Invalid backup filename')
+    if not isinstance(manifest.get('completed_at'), str) or type(manifest.get('rows')) is not int or manifest['rows'] <= 0:
+        raise ValueError('Malformed backup manifest fields')
     created = dt.datetime.fromisoformat(manifest['completed_at'])
     if created.tzinfo is None:
         raise ValueError('Backup timestamp must have timezone')
