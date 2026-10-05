@@ -36,6 +36,23 @@ class OperationsTests(unittest.TestCase):
     def save(self):
         (self.root / 'backups/latest.json').write_text(json.dumps(self.manifest))
 
+    def test_scalar_manifest_rejected(self):
+        (self.root / 'backups/latest.json').write_text('[]')
+        with self.assertRaisesRegex(ValueError, 'Malformed'):
+            ops.validate_backup(self.root, self.now)
+
+    def test_nonstring_filename_rejected(self):
+        self.manifest['file'] = 12
+        self.save()
+        with self.assertRaisesRegex(ValueError, 'filename'):
+            ops.validate_backup(self.root, self.now)
+
+    def test_nonstring_timestamp_rejected(self):
+        self.manifest['completed_at'] = 12
+        self.save()
+        with self.assertRaisesRegex(ValueError, 'Malformed'):
+            ops.validate_backup(self.root, self.now)
+
     def test_valid_backup(self):
         self.assertEqual(ops.validate_backup(self.root, self.now)[1]['rows'], 1)
 
