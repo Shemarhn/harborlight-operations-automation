@@ -18,7 +18,7 @@ class Handler(BaseHTTPRequestHandler):
         try:
             records = orders(self.server.database)
             if self.path == '/health':
-                payload = {'status': 'ok', 'orders': len(records)}
+                payload = {'status': 'ok', 'orders': len(records), 'site': self.server.site}
             elif self.path == '/orders':
                 payload = {'orders': records}
             else:
@@ -43,9 +43,14 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--database', type=Path, required=True)
     parser.add_argument('--port', type=int, default=18765)
+    parser.add_argument('--config', type=Path, required=True)
     args = parser.parse_args()
     server = ThreadingHTTPServer(('127.0.0.1', args.port), Handler)
     server.database = args.database.resolve()
+    config = json.loads(args.config.read_text())
+    if config.get('mode') != 'dispatch':
+        raise ValueError('Unsupported operational mode')
+    server.site = config['site']
     server.serve_forever()
 
 
