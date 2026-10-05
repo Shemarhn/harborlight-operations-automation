@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 780" role="img" aria-labelledby="title desc">
+<title id="title">Harborlight operations automation: executed Ubuntu runner architecture</title>
+<desc id="desc">Browser-authored GitHub source runs on a disposable standard Ubuntu runner. A read-only app, audit controller, local backup and isolated restore are connected inside that boundary. A timer invokes audit only; explicit apply permits a guarded service restart. There is no external notification or off-device backup.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#086d70"/></marker></defs>
+<rect width="1120" height="780" rx="18" fill="#f4f8f7"/>
+<g font-family="Segoe UI,Arial,sans-serif" fill="#102e38">
+<text x="42" y="48" font-size="27" font-weight="700">Harborlight • operations with verified recovery</text>
+<text x="42" y="78" font-size="16">Executed synthetic lab • standard Ubuntu 24.04 runner • no paid resources</text>
+<rect x="42" y="105" width="1036" height="84" rx="10" fill="#102e38"/>
+<text x="65" y="139" font-size="19" fill="#fff" font-weight="700">GitHub public repository + read-only Actions workflow</text>
+<text x="65" y="167" font-size="16" fill="#d0ece8">Browser-authored source → tests → owned fault exercise → sanitized summary and logs</text>
+<path d="M560 189V224" stroke="#086d70" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="42" y="234" width="1036" height="449" rx="12" fill="#fff" stroke="#086d70" stroke-width="2" stroke-dasharray="8 5"/>
+<text x="66" y="269" font-size="18" font-weight="700">Disposable runner boundary — synthetic data; loopback endpoints</text>
+<rect x="66" y="296" width="283" height="125" rx="9" fill="#e5f4f0" stroke="#086d70"/>
+<text x="84" y="327" font-size="18" font-weight="700">Dispatch app + SQLite</text>
+<text x="84" y="355" font-size="16">harborapp • read-only • 5 orders</text>
+<text x="84" y="381" font-size="16">127.0.0.1:18765</text>
+<text x="84" y="405" font-size="14">Protected systemd service</text>
+<rect x="423" y="296" width="283" height="125" rx="9" fill="#102e38"/>
+<text x="443" y="327" font-size="18" font-weight="700" fill="#fff">Operations controller</text>
+<text x="443" y="355" font-size="16" fill="#d0ece8">Six checks • fixed owned root</text>
+<text x="443" y="381" font-size="16" fill="#d0ece8">Preview → explicit guarded apply</text>
+<text x="443" y="405" font-size="14" fill="#d0ece8">Lock + cooldown + post-check</text>
+<path d="M349 354H417" stroke="#086d70" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="365" y="338" font-size="13">inspect</text>
+<rect x="780" y="296" width="272" height="125" rx="9" fill="#e5f4f0" stroke="#086d70"/>
+<text x="798" y="327" font-size="18" font-weight="700">Audit-only timer</text>
+<text x="798" y="355" font-size="16">Real systemd automatic runs</text>
+<text x="798" y="381" font-size="16">5-second lab interval</text>
+<text x="798" y="405" font-size="14">No scheduled remediation</text>
+<path d="M780 354H712" stroke="#086d70" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="717" y="338" font-size="13">invoke</text>
+<rect x="66" y="506" width="283" height="139" rx="9" fill="#e5f4f0" stroke="#086d70"/>
+<text x="84" y="537" font-size="18" font-weight="700">Local verified snapshots</text>
+<text x="84" y="565" font-size="16">Online SQLite backup API</text>
+<text x="84" y="591" font-size="16">Freshness • SHA256 • integrity</text>
+<text x="84" y="619" font-size="14">Count + ordered-row fingerprint</text>
+<rect x="423" y="506" width="283" height="139" rx="9" fill="#e5f4f0" stroke="#086d70"/>
+<text x="443" y="537" font-size="18" font-weight="700">Reports + local events</text>
+<text x="443" y="565" font-size="16">JSON + Markdown + timestamps</text>
+<text x="443" y="591" font-size="16">OPEN / RECOVERED transitions</text>
+<text x="443" y="619" font-size="14">Findings and next actions</text>
+<rect x="780" y="506" width="272" height="139" rx="9" fill="#e5f4f0" stroke="#086d70"/>
+<text x="798" y="537" font-size="18" font-weight="700">Separate restored app</text>
+<text x="798" y="565" font-size="16">Unique drill database</text>
+<text x="798" y="591" font-size="16">127.0.0.1:18766 • test only</text>
+<text x="798" y="619" font-size="14">Same 5 HTTP orders verified</text>
+<path d="M500 421V457H207V500M564 421V500M628 421V457H916V500" fill="none" stroke="#086d70" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="66" y="724" font-size="16" font-weight="700">Limits: local single failure domain • ephemeral host • no off-host alert delivery</text>
+<text x="66" y="751" font-size="15">No production SLA, monthly operation, immutable backup, RPO or recovery-time guarantee claimed.</text>
+</g></svg>
