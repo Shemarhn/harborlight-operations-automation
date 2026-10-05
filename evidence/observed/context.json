@@ -1,0 +1,9 @@
+{
+  "environment": "GitHub-hosted Ubuntu 24.04 ephemeral runner",
+  "synthetic_only": true,
+  "run_id": "37343589687",
+  "source_commit": "112ab9532c0b2f6bac99a13bcaf9fbccc480c289",
+  "observed_at": "2026-10-05T16:48:38.080752+00:00",
+  "outbound_notification_tested": false,
+  "paid_resources_created": false
+}
