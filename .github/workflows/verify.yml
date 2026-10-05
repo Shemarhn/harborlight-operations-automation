@@ -1,0 +1,56 @@
+name: Verify Harborlight operations
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['app/**', 'operations/**', 'lab/**', 'tests/**', '.github/workflows/**']
+  pull_request:
+    paths: ['app/**', 'operations/**', 'lab/**', 'tests/**', '.github/workflows/**']
+permissions:
+  contents: read
+concurrency:
+  group: harborlight-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Compile and test operation boundaries
+        run: |
+          python3 -m compileall -q app operations lab tests
+          python3 -m unittest discover -s tests -v
+      - name: Refuse an unmarked host
+        run: |
+          set +e
+          python3 operations/ops.py audit > /tmp/harborlight-refusal.json
+          code=$?
+          set -e
+          test "$code" -eq 3
+          python3 -c 'import json; assert json.load(open("/tmp/harborlight-refusal.json"))["status"] == "ERROR"'
+      - name: Execute real Ubuntu failure and recovery exercises
+        run: sudo --preserve-env=GITHUB_ACTIONS,GITHUB_RUN_ID,GITHUB_SHA python3 lab/exercise.py
+      - name: Verify evidence hashes and acceptance count
+        run: |
+          cd evidence/run
+          sha256sum --check SHA256SUMS.txt
+          python3 -c 'import json; c=json.load(open("cases.json")); assert len(c)==16 and all(x["result"]=="PASS" for x in c)'
+      - name: Publish the observed report in this run
+        if: always()
+        run: |
+          if test -f evidence/run/acceptance.md; then cat evidence/run/acceptance.md >> "$GITHUB_STEP_SUMMARY"; fi
+          if test -f evidence/run/latest.md; then cat evidence/run/latest.md >> "$GITHUB_STEP_SUMMARY"; fi
+          if test -f evidence/run/cases.json; then cat evidence/run/cases.json; fi
+          if test -f evidence/run/context.json; then cat evidence/run/context.json; fi
+          if test -f evidence/run/SHA256SUMS.txt; then cat evidence/run/SHA256SUMS.txt; fi
+      - name: Preserve sanitized evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: harborlight-observed-${{ github.run_id }}
+          path: evidence/run/
+          if-no-files-found: warn
+          retention-days: 7
