@@ -1,0 +1,38 @@
+{
+  "checks": [
+    {
+      "check": "service",
+      "detail": "Owned systemd service is active",
+      "status": "PASS"
+    },
+    {
+      "check": "health",
+      "detail": "HTTP health and nonempty dataset verified",
+      "status": "PASS"
+    },
+    {
+      "check": "configuration",
+      "detail": "Configuration matches approved digest",
+      "status": "PASS"
+    },
+    {
+      "check": "database",
+      "detail": "Live SQLite integrity and five synthetic orders verified",
+      "status": "PASS"
+    },
+    {
+      "check": "backup",
+      "detail": "Backup freshness, SHA256, SQLite integrity and dataset verified",
+      "status": "PASS"
+    },
+    {
+      "check": "capacity",
+      "detail": "At least 32 MiB free on lab filesystem",
+      "status": "PASS"
+    }
+  ],
+  "engagement": "synthetic Harborlight",
+  "observed_at": "2026-10-05T16:48:38.064689+00:00",
+  "status": "PASS",
+  "transitions": []
+}
