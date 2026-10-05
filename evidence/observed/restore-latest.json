@@ -1,0 +1,8 @@
+{
+  "fingerprint": "cad1d8fda12c3e35aee898d9eaab408c2054d10e4956aafe7bf40bfc63344556",
+  "integrity": "ok",
+  "live_database_overwritten": false,
+  "operation": "isolated-restore",
+  "rows": 5,
+  "status": "PASS"
+}
