@@ -1,0 +1,520 @@
+[
+  {
+    "evidence": {
+      "checks": [
+        {
+          "check": "service",
+          "detail": "Owned systemd service is active",
+          "status": "PASS"
+        },
+        {
+          "check": "health",
+          "detail": "HTTP health and nonempty dataset verified",
+          "status": "PASS"
+        },
+        {
+          "check": "configuration",
+          "detail": "Configuration matches approved digest",
+          "status": "PASS"
+        },
+        {
+          "check": "database",
+          "detail": "Live SQLite integrity and five synthetic orders verified",
+          "status": "PASS"
+        },
+        {
+          "check": "backup",
+          "detail": "Backup freshness, SHA256, SQLite integrity and dataset verified",
+          "status": "PASS"
+        },
+        {
+          "check": "capacity",
+          "detail": "At least 32 MiB free on lab filesystem",
+          "status": "PASS"
+        }
+      ],
+      "engagement": "synthetic Harborlight",
+      "observed_at": "2026-10-05T16:48:26.602128+00:00",
+      "status": "PASS",
+      "transitions": []
+    },
+    "observed_at": "2026-10-05T16:48:26.616198+00:00",
+    "result": "PASS",
+    "scenario": "healthy baseline: six checks"
+  },
+  {
+    "evidence": {
+      "checks": [
+        {
+          "check": "service",
+          "detail": "Service is inactive; investigate before restarting",
+          "status": "FAIL"
+        },
+        {
+          "check": "health",
+          "detail": "HTTP health failed; inspect service and database",
+          "status": "FAIL"
+        },
+        {
+          "check": "configuration",
+          "detail": "Configuration matches approved digest",
+          "status": "PASS"
+        },
+        {
+          "check": "database",
+          "detail": "Live SQLite integrity and five synthetic orders verified",
+          "status": "PASS"
+        },
+        {
+          "check": "backup",
+          "detail": "Backup freshness, SHA256, SQLite integrity and dataset verified",
+          "status": "PASS"
+        },
+        {
+          "check": "capacity",
+          "detail": "At least 32 MiB free on lab filesystem",
+          "status": "PASS"
+        }
+      ],
+      "engagement": "synthetic Harborlight",
+      "observed_at": "2026-10-05T16:48:26.752325+00:00",
+      "status": "FAIL",
+      "transitions": [
+        {
+          "at": "2026-10-05T16:48:26.750999+00:00",
+          "check": "health",
+          "transition": "OPEN"
+        },
+        {
+          "at": "2026-10-05T16:48:26.751009+00:00",
+          "check": "service",
+          "transition": "OPEN"
+        }
+      ]
+    },
+    "observed_at": "2026-10-05T16:48:26.768768+00:00",
+    "result": "PASS",
+    "scenario": "service outage detected"
+  },
+  {
+    "evidence": {
+      "action": "restart harborlight-app.service",
+      "changed": false,
+      "status": "PLAN"
+    },
+    "observed_at": "2026-10-05T16:48:26.904368+00:00",
+    "result": "PASS",
+    "scenario": "dry-run leaves stopped service unchanged"
+  },
+  {
+    "evidence": {
+      "action": "restart harborlight-app.service",
+      "changed": true,
+      "post_validation": {
+        "checks": [
+          {
+            "check": "service",
+            "detail": "Owned systemd service is active",
+            "status": "PASS"
+          },
+          {
+            "check": "health",
+            "detail": "HTTP health and nonempty dataset verified",
+            "status": "PASS"
+          },
+          {
+            "check": "configuration",
+            "detail": "Configuration matches approved digest",
+            "status": "PASS"
+          },
+          {
+            "check": "database",
+            "detail": "Live SQLite integrity and five synthetic orders verified",
+            "status": "PASS"
+          },
+          {
+            "check": "backup",
+            "detail": "Backup freshness, SHA256, SQLite integrity and dataset verified",
+            "status": "PASS"
+          },
+          {
+            "check": "capacity",
+            "detail": "At least 32 MiB free on lab filesystem",
+            "status": "PASS"
+          }
+        ],
+        "engagement": "synthetic Harborlight",
+        "observed_at": "2026-10-05T16:48:27.315041+00:00",
+        "status": "PASS",
+        "transitions": [
+          {
+            "at": "2026-10-05T16:48:27.314077+00:00",
+            "check": "health",
+            "transition": "RECOVERED"
+          },
+          {
+            "at": "2026-10-05T16:48:27.314086+00:00",
+            "check": "service",
+            "transition": "RECOVERED"
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    "observed_at": "2026-10-05T16:48:27.328703+00:00",
+    "result": "PASS",
+    "scenario": "guarded restart and post-change validation"
+  },
+  {
+    "evidence": {
+      "action": "none",
+      "changed": false,
+      "status": "PASS"
+    },
+    "observed_at": "2026-10-05T16:48:27.439638+00:00",
+    "result": "PASS",
+    "scenario": "repeat apply is a no-op when healthy"
+  },
+  {
+    "evidence": {
+      "reason": "Restart refused: 60-second cooldown",
+      "status": "ERROR"
+    },
+    "observed_at": "2026-10-05T16:48:27.574327+00:00",
+    "result": "PASS",
+    "scenario": "cooldown blocks a second restart"
+  },
+  {
+    "evidence": {
+      "first": {
+        "checks": [
+          {
+            "check": "service",
+            "detail": "Owned systemd service is active",
+            "status": "PASS"
+          },
+          {
+            "check": "health",
+            "detail": "HTTP health and nonempty dataset verified",
+            "status": "PASS"
+          },
+          {
+            "check": "configuration",
+            "detail": "Configuration drift; compare with approved change record",
+            "status": "FAIL"
+          },
+          {
+            "check": "database",
+            "detail": "Live SQLite integrity and five synthetic orders verified",
+            "status": "PASS"
+          },
+          {
+            "check": "backup",
+            "detail": "Backup freshness, SHA256, SQLite integrity and dataset verified",
+            "status": "PASS"
+          },
+          {
+            "check": "capacity",
+            "detail": "At least 32 MiB free on lab filesystem",
+            "status": "PASS"
+          }
+        ],
+        "engagement": "synthetic Harborlight",
+        "observed_at": "2026-10-05T16:48:28.057370+00:00",
+        "status": "FAIL",
+        "transitions": [
+          {
+            "at": "2026-10-05T16:48:28.056340+00:00",
+            "check": "configuration",
+            "transition": "OPEN"
+          }
+        ]
+      },
+      "repeat": {
+        "checks": [
+          {
+            "check": "service",
+            "detail": "Owned systemd service is active",
+            "status": "PASS"
+          },
+          {
+            "check": "health",
+            "detail": "HTTP health and nonempty dataset verified",
+            "status": "PASS"
+          },
+          {
+            "check": "configuration",
+            "detail": "Configuration drift; compare with approved change record",
+            "status": "FAIL"
+          },
+          {
+            "check": "database",
+            "detail": "Live SQLite integrity and five synthetic orders verified",
+            "status": "PASS"
+          },
+          {
+            "check": "backup",
+            "detail": "Backup freshness, SHA256, SQLite integrity and dataset verified",
+            "status": "PASS"
+          },
+          {
+            "check": "capacity",
+            "detail": "At least 32 MiB free on lab filesystem",
+            "status": "PASS"
+          }
+        ],
+        "engagement": "synthetic Harborlight",
+        "observed_at": "2026-10-05T16:48:28.162476+00:00",
+        "status": "FAIL",
+        "transitions": []
+      }
+    },
+    "observed_at": "2026-10-05T16:48:28.175765+00:00",
+    "result": "PASS",
+    "scenario": "configuration drift and incident deduplication"
+  },
+  {
+    "evidence": {
+      "reason": "Restart refused: configuration, data, backup or capacity precondition failed",
+      "status": "ERROR"
+    },
+    "observed_at": "2026-10-05T16:48:28.312059+00:00",
+    "result": "PASS",
+    "scenario": "drift blocks remediation before restart"
+  },
+  {
+    "evidence": {
+      "failure": {
+        "checks": [
+          {
+            "check": "service",
+            "detail": "Owned systemd service is active",
+            "status": "PASS"
+          },
+          {
+            "check": "health",
+            "detail": "HTTP health and nonempty dataset verified",
+            "status": "PASS"
+          },
+          {
+            "check": "configuration",
+            "detail": "Configuration matches approved digest",
+            "status": "PASS"
+          },
+          {
+            "check": "database",
+            "detail": "Live SQLite integrity and five synthetic orders verified",
+            "status": "PASS"
+          },
+          {
+            "check": "backup",
+            "detail": "Backup missing, stale, damaged or inconsistent; create and verify a new snapshot",
+            "status": "FAIL"
+          },
+          {
+            "check": "capacity",
+            "detail": "At least 32 MiB free on lab filesystem",
+            "status": "PASS"
+          }
+        ],
+        "engagement": "synthetic Harborlight",
+        "observed_at": "2026-10-05T16:48:28.788987+00:00",
+        "status": "FAIL",
+        "transitions": [
+          {
+            "at": "2026-10-05T16:48:28.787864+00:00",
+            "check": "backup",
+            "transition": "OPEN"
+          }
+        ]
+      },
+      "replacement": {
+        "completed_at": "2026-10-05T16:48:28.867405+00:00",
+        "file": "snapshot-20261005T164828Z-e6b0f4ef.sqlite",
+        "fingerprint": "cad1d8fda12c3e35aee898d9eaab408c2054d10e4956aafe7bf40bfc63344556",
+        "integrity": "ok",
+        "operation": "backup",
+        "rows": 5,
+        "sha256": "dc12c291575d951ddc27b85032e709ae39bbc0edddf9b0ab2513104fdaf0115c",
+        "status": "PASS"
+      }
+    },
+    "observed_at": "2026-10-05T16:48:28.986042+00:00",
+    "result": "PASS",
+    "scenario": "stale backup detected and replaced by verified snapshot"
+  },
+  {
+    "evidence": {
+      "audit": {
+        "checks": [
+          {
+            "check": "service",
+            "detail": "Owned systemd service is active",
+            "status": "PASS"
+          },
+          {
+            "check": "health",
+            "detail": "HTTP health and nonempty dataset verified",
+            "status": "PASS"
+          },
+          {
+            "check": "configuration",
+            "detail": "Configuration matches approved digest",
+            "status": "PASS"
+          },
+          {
+            "check": "database",
+            "detail": "Live SQLite integrity and five synthetic orders verified",
+            "status": "PASS"
+          },
+          {
+            "check": "backup",
+            "detail": "Backup missing, stale, damaged or inconsistent; create and verify a new snapshot",
+            "status": "FAIL"
+          },
+          {
+            "check": "capacity",
+            "detail": "At least 32 MiB free on lab filesystem",
+            "status": "PASS"
+          }
+        ],
+        "engagement": "synthetic Harborlight",
+        "observed_at": "2026-10-05T16:48:29.080609+00:00",
+        "status": "FAIL",
+        "transitions": [
+          {
+            "at": "2026-10-05T16:48:29.079387+00:00",
+            "check": "backup",
+            "transition": "OPEN"
+          }
+        ]
+      },
+      "restore": {
+        "reason": "Backup checksum mismatch",
+        "status": "ERROR"
+      }
+    },
+    "observed_at": "2026-10-05T16:48:29.170666+00:00",
+    "result": "PASS",
+    "scenario": "corrupt backup rejected; live workload preserved"
+  },
+  {
+    "evidence": {
+      "drill": {
+        "fingerprint": "cad1d8fda12c3e35aee898d9eaab408c2054d10e4956aafe7bf40bfc63344556",
+        "integrity": "ok",
+        "live_database_overwritten": false,
+        "operation": "isolated-restore",
+        "rows": 5,
+        "status": "PASS"
+      },
+      "records": [
+        {
+          "id": 1,
+          "reference": "HL-001",
+          "status": "Ready"
+        },
+        {
+          "id": 2,
+          "reference": "HL-002",
+          "status": "Dispatched"
+        },
+        {
+          "id": 3,
+          "reference": "HL-003",
+          "status": "Queued"
+        },
+        {
+          "id": 4,
+          "reference": "HL-004",
+          "status": "Ready"
+        },
+        {
+          "id": 5,
+          "reference": "HL-005",
+          "status": "Queued"
+        }
+      ],
+      "restored_health": {
+        "orders": 5,
+        "site": "Harborlight synthetic dispatch",
+        "status": "ok"
+      }
+    },
+    "observed_at": "2026-10-05T16:48:29.578335+00:00",
+    "result": "PASS",
+    "scenario": "isolated restore serves identical five orders through HTTP"
+  },
+  {
+    "evidence": {
+      "reason": "Another operation holds the lock",
+      "status": "ERROR"
+    },
+    "observed_at": "2026-10-05T16:48:29.654900+00:00",
+    "result": "PASS",
+    "scenario": "overlapping operation refused"
+  },
+  {
+    "evidence": {
+      "automatic_reports": 2,
+      "lab_interval_seconds": 5,
+      "unit_result": "Result=success\nExecMainStatus=0\n"
+    },
+    "observed_at": "2026-10-05T16:48:37.971744+00:00",
+    "result": "PASS",
+    "scenario": "two automatic systemd timer audits observed"
+  },
+  {
+    "evidence": {
+      "checks": [
+        {
+          "check": "service",
+          "detail": "Owned systemd service is active",
+          "status": "PASS"
+        },
+        {
+          "check": "health",
+          "detail": "HTTP health and nonempty dataset verified",
+          "status": "PASS"
+        },
+        {
+          "check": "configuration",
+          "detail": "Configuration matches approved digest",
+          "status": "PASS"
+        },
+        {
+          "check": "database",
+          "detail": "Live SQLite integrity and five synthetic orders verified",
+          "status": "PASS"
+        },
+        {
+          "check": "backup",
+          "detail": "Backup freshness, SHA256, SQLite integrity and dataset verified",
+          "status": "PASS"
+        },
+        {
+          "check": "capacity",
+          "detail": "At least 32 MiB free on lab filesystem",
+          "status": "PASS"
+        }
+      ],
+      "engagement": "synthetic Harborlight",
+      "observed_at": "2026-10-05T16:48:38.064689+00:00",
+      "status": "PASS",
+      "transitions": []
+    },
+    "observed_at": "2026-10-05T16:48:38.079023+00:00",
+    "result": "PASS",
+    "scenario": "final operational state healthy"
+  },
+  {
+    "evidence": {
+      "application_active": false,
+      "lab_units_removed": true,
+      "other_units_changed": false
+    },
+    "observed_at": "2026-10-05T16:48:38.409258+00:00",
+    "result": "PASS",
+    "scenario": "rollback removes lab units and stops workload"
+  }
+]
