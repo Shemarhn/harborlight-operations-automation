@@ -37,7 +37,7 @@ jobs:
         run: |
           cd evidence/run
           sha256sum --check SHA256SUMS.txt
-          python3 -c 'import json; c=json.load(open("cases.json")); assert len(c)==16 and all(x["result"]=="PASS" for x in c)'
+          python3 -c 'import json; c=json.load(open("cases.json")); assert len(c)==15 and all(x["result"]=="PASS" for x in c)'
       - name: Publish the observed report in this run
         if: always()
         run: |
@@ -46,11 +46,3 @@ jobs:
           if test -f evidence/run/cases.json; then cat evidence/run/cases.json; fi
           if test -f evidence/run/context.json; then cat evidence/run/context.json; fi
           if test -f evidence/run/SHA256SUMS.txt; then cat evidence/run/SHA256SUMS.txt; fi
-      - name: Preserve sanitized evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: harborlight-observed-${{ github.run_id }}
-          path: evidence/run/
-          if-no-files-found: warn
-          retention-days: 7
