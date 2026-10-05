@@ -1,0 +1,21 @@
+# Operational risk assessment
+
+Synthetic engagement; ratings are engineering prioritization, not observed client incidents or a quantitative risk model.
+
+| ID | Business risk | Priority | Treatment | Executed verification | Residual risk |
+|---|---|---|---|---|---|
+| R1 | Dispatch service stops and no one notices. | High | Service and HTTP checks; timestamped report; local incident transitions. | Stopped unit produces service/health FAIL and OPEN; recovery is rechecked. | No external notification transport or delivery test; no on-call claim. |
+| R2 | Automation repeatedly restarts an unhealthy service and hides its cause. | High | Preview first; one allowlisted restart; explicit apply; preconditions; lock; cooldown; bounded post-checks. | Preview leaves service stopped; apply recovers it; repeat healthy apply is a no-op; cooldown and overlap are refused. | Operator still must diagnose the cause; complex repair is not automated. |
+| R3 | Unapproved configuration enters maintenance unnoticed. | High | Approved file digest and change review. | Edited startup configuration fails audit and blocks restart until original bytes return. | Exact-byte drift is not a semantic review; privileged actor can modify both file and approval. |
+| R4 | A backup exists but is stale, damaged or unusable. | High | Online snapshot; completion timestamp; SHA256; SQLite integrity; count/fingerprint; isolated drill. | Two-hour-old synthetic timestamp and corrupted snapshot fail; corrupt restore is refused; new snapshot and recovered HTTP app pass. | Local single failure domain; no immutable or off-device backup. |
+| R5 | A restore overwrites current business data before acceptance. | High | Unique separate destination; no live-restore command. | Recovered copy serves five matching orders; live workload stays healthy during corrupt-backup refusal. | Actual cutover still needs approved write/data-loss procedure. |
+| R6 | Concurrent jobs corrupt a report, manifest or change state. | Medium | Nonblocking flock; atomic JSON publication; unique snapshot/drill names. | Second CLI operation is refused; atomic replacement and no temporary residue tested. | Lock is per-host, not distributed; direct filesystem edits bypass it. |
+| R7 | Repeated failures create noisy duplicate incidents. | Medium | Compare previous and current failed-check sets; log transitions. | Second drift audit emits no duplicate OPEN and adds no event line. | Controller-state loss and later recurrence can legitimately open another event. |
+| R8 | Backups/reports exhaust disk space. | Medium | Check actual free space; block restart below threshold; no automatic deletion. | Healthy capacity check observed; low-capacity next action documented. | Low-space live fault was not injected; no implemented retention policy. |
+| R9 | Maintenance is believed to be recurring when the scheduler does not run. | Medium | Actual systemd timer and observed new reports. | Two automatic audits and successful oneshot exit observed. | Brief accelerated test; no persistent host, reboot proof or monthly operating history. |
+| R10 | Evidence reveals client data, credentials or private host state. | High | Synthetic-only data; selected checks; root-only state; public report allowlist. | Published results contain synthetic references, statuses, hashes, check names and run/commit identifiers. | Future reuse needs fresh data/log review; no comprehensive secret-scanner certification. |
+| R11 | Demonstration accidentally creates paid infrastructure or broader repo access. | High | Public standard runner; no cloud SDK/provisioning; no trial/account; contents-read CI; no final artifact/cache steps. | Final workflow and green run show the selected runner and read-only implementation. | Future platform/config changes need renewed cost/access review. |
+
+## Risk acceptance
+
+This design is accepted for a disposable synthetic demonstration. A real client must agree backup destination, retention, operational thresholds, change authorization, alert recipients, support hours and recovery requirements before deployment. The tables describe delivered controls and explicit boundaries; they do not imply contractual acceptance by a fictional company.
