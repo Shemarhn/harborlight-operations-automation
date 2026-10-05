@@ -38,7 +38,7 @@ The final workflow has only contents:read and does not persist checkout credenti
 
 ## D10 — Avoid artifact storage and caches in the final workflow
 
-GitHub documents public standard-runner execution as free, while artifacts can share a metered allowance. The final workflow uses logs and summaries, which do not consume artifact storage. No cache or artifact upload step remains. One initial development run produced a 6.15 KB artifact with seven-day retention before this was removed from the design; the account usage view showed zero billed usage at inspection. That development run is retained as an honest failed-run record, not the final acceptance claim.
+GitHub documents public standard-runner execution as free, while artifacts can share a metered allowance. The final workflow uses logs and summaries, which do not consume artifact storage. No cache or artifact upload step remains. One initial development run produced a 6.15 KB artifact with seven-day retention before this was removed from the design. That development run is retained as an honest failed-run record, not the final acceptance claim.
 
 ## D11 — Keep the public story bounded
 
