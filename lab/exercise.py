@@ -19,6 +19,7 @@ CODE = Path('/opt/harborlight-lab')
 UNIT = 'harborlight-app.service'
 ARTIFACT = REPO / 'evidence/run'
 CASES = []
+OWNED = False
 
 
 def command(*args, check=True):
@@ -59,6 +60,7 @@ def wait_health(port=18765):
 
 
 def install():
+    global OWNED
     if os.geteuid() != 0 or os.environ.get('GITHUB_ACTIONS') != 'true':
         raise SystemExit('This fault harness requires root on a fresh GitHub Actions runner')
     if ROOT.exists() or CODE.exists():
@@ -66,7 +68,10 @@ def install():
     ARTIFACT.mkdir(parents=True, exist_ok=True)
     os.umask(0o077)
     ROOT.mkdir(mode=0o755)
+    ROOT.chmod(0o755)
+    OWNED = True
     CODE.mkdir(mode=0o755)
+    CODE.chmod(0o755)
     for part in ('app', 'operations'):
         shutil.copytree(REPO / part, CODE / part)
         (CODE / part).chmod(0o755)
@@ -251,7 +256,7 @@ WantedBy=timers.target
 
 
 def cleanup():
-    if not ROOT.exists():
+    if not OWNED:
         return
     for unit in ('harborlight-audit.timer', 'harborlight-audit.service', UNIT):
         command('systemctl', 'stop', unit, check=False)
